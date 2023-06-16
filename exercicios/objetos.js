@@ -21,3 +21,9 @@ console.log(rua, numero);
 //criar uma váriavel com as outras propriedades
 const { idade, ...resto } = pessoa;
 console.log(resto);
+
+//criando um objeto com construtor 
+const pessoa1 = new Object();
+pessoa1.nome = 'Naiara';
+pessoa1.sobrenome = 'Otávio';
+
