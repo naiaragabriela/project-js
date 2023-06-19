@@ -19,12 +19,10 @@ function Produto (nome, preço, estoque) {
     });
 }
 
-
 //const p1 = new Produto ('Camiseta', 20, 3); 
 //console.log(p1);
 //p1.estoque = 'afsafsfa';
 //console.log(p1.estoque);
-
 
 function criaProduto(nome) {
     return { 
