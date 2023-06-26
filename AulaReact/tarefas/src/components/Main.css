@@ -64,4 +64,11 @@
 .tarefas li .edit,
 .tarefas li .delete {
   cursor: pointer;
+  transition: all 600ms;
+}
+
+.tarefas li span {
+ display: flex;
+ align-items: center;
+
 }

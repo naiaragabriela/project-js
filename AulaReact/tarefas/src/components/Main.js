@@ -8,22 +8,83 @@ export default class Main extends Component {
       'Fazer café',
       'Beber água',
       'Estudar'
-    ]
+    ],
+    index: -1,
   };
 
- handleChange = (e) => {
+componentDiMount() {
+  const tarefas = JSON.parse(localStorage.getItem('tarefas'));
+
+  if (!tarefas) return;
+
+  this.setState({ tarefas });
+}
+
+componentDidUpdate(prevProps, prevState) {
+  const { tarefas } = this.state;
+
+  if(tarefas === prevState.tarefas) return;
+
+  localStorage.setItem('tarefas', JSON.stringify(tarefas));
+}
+
+handleSubmit = (e) => {
+  e.preventdefault();
+  const { tarefa, index } = this.state;
+  let { novaTarefa } = this.state;
+  novaTarefa = novaTarefa.trim();
+
+  if(tarefas.indexOf(novaTarefa) !== -1)return;
+
+  const novasTarefas = [...tarefas];
+
+  if(index === -1) {
+    this.setState({
+      tarefas: [...novasTarefas, novaTarefa],
+      novaTarefa: '',
+    });
+  } else {
+    novasTarefas[index] = novaTarefa;
+
+    this.setState({
+      tarefas: [...novasTarefas],
+      index: -1,
+    });
+  }
+}
+
+handleChange = (e) => {
   this.setState({
     novaTarefa: e.target.value,
   });
- }
+}
 
-  render() {
-    const {novaTarefa, tarefas} = this.state;
+handleEdit = (e, index) => {
+  const { tarefas } = this.state;
 
-    return (
-    <div className="main">
-      <h1>Lista de Tarefas</h1>
-      <form action="#" className="form">
+  this.setState({
+    index,
+    novaTarefa: tarefas[index],
+  });
+}
+
+handleDelete = (e, index) => {
+  const { tarefas } = this.state;
+  const novasTarefas = [...tarefas];
+  novasTarefas.splice(index, 1);
+
+  this.setState({
+    tarefas: [...novasTarefas],
+  });
+}
+
+render() {
+  const {novaTarefa, tarefas} = this.state;
+
+  return (
+  <div className="main">
+    <h1>Lista de Tarefas</h1>
+      <form onSubmit={this.handleSubmit} action="#" className="form">
         <input
         onChange={this.handleChange}
         type="text"
@@ -31,23 +92,26 @@ export default class Main extends Component {
         />
         <button type="submit">Add</button>
       </form>
-
       <ul className="tarefas">
-        {tarefas.map(tarefa => (
+        {tarefas.map((tarefa, index) => (
           <li key={tarefa}>
             {tarefa}
-            <div>
-              <button className="edit">
+            <span>
+              <button
+              onClick = { (e) => this.handleEdit(e, index)}
+              className="edit">
                 Check
               </button>
-              <button className="delete">
+              <button
+              onClick = { (e) => this.handleDelete(e, index)}
+              className="delete">
                 Delete
               </button>
-            </div>
+            </span>
           </li>
         ))}
-     </ul>
-    </div>
-    );
-  }
+      </ul>
+  </div>
+  );
+ }
 }
