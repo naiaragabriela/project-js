@@ -9,8 +9,8 @@ export default function Login() {
         Login
         <small>Oie</small>
       </Title>
-      <Paragrafo> Bem-vindo ao site base</Paragrafo>
-      <a href="">Meu primeiro site react</a>
+      <Paragrafo> Bem-vindo ao site base de React</Paragrafo>
+      <button type="button">Enviar</button>
     </Container>
   );
 }
