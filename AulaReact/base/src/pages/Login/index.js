@@ -1,17 +1,18 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
 import { Container } from '../../styles/GlobalStyles';
 import { Title, Paragrafo } from './styled';
-import axios from '../../services/axios';
+import * as exempleActions from '../../store/modules/example/actions';
 
 export default function Login() {
-  React.useEffect(() => {
-    async function getData() {
-      const response = await axios.get('/alunos');
-      console.log(response);
-    }
+  const dispatch = useDispatch();
 
-    getData();
-  }, []);
+  function handleClick(e) {
+    e.preventDefault();
+
+    dispatch(exempleActions.clicaBotao());
+  }
   return (
     <Container>
       <Title isRed={false}>
@@ -19,7 +20,9 @@ export default function Login() {
         <small>Oie</small>
       </Title>
       <Paragrafo> Bem-vindo ao site base de React</Paragrafo>
-      <button type="button">Enviar</button>
+      <button type="button" onClick={handleClick}>
+        Enviar
+      </button>
     </Container>
   );
 }
